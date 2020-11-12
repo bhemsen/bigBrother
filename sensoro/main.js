@@ -58,7 +58,7 @@ function getTemperatureInitial() {
                 
         for (let tupel in result) {
             labels.push(result[tupel].time);
-            temperatures.push(parseInt(result[tupel].temperature));
+            temperatures.push(parseFloat(result[tupel].temperature));
             addDataTemp(chart, labels[tupel], temperatures[tupel]); 
         }
         
@@ -83,7 +83,7 @@ function getTemperatureUpdate(){
                 
         for (let tupel in result) {
             labels.push(result[tupel].time);
-            temperatures.push(parseInt(result[tupel].temperature));
+            temperatures.push(parseFloat(result[tupel].temperature));
             addDataTemp(chart, labels[tupel], temperatures[tupel]); 
             currTemp.innerText = temperatures[tupel];
         }
@@ -107,7 +107,7 @@ function getHumidityInitial() {
             
                 
         for (let tupel in result) {
-            humidity.push(parseInt(result[tupel].humidity));
+            humidity.push(parseFloat(result[tupel].humidity));
             addDataHum(chart, humidity[tupel]); 
         }
         
@@ -130,7 +130,7 @@ function getHumidityUpdate(){
             let result = JSON.parse(this.response);
             
         for (let tupel in result) {
-            humidity.push(parseInt(result[tupel].humidity));
+            humidity.push(parseFloat(result[tupel].humidity));
             addDataHum(chart, humidity[tupel]); 
             currHumidity.innerText = humidity[tupel];
         }
@@ -157,5 +157,5 @@ function updateArrays(){
 
 
 getTemperatureInitial();
-getHumidityUpdate();
+getHumidityInitial();
 updateArrays();

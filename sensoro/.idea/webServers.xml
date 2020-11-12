@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="01ce9d86-2fe6-4e26-84df-901f5a9b8300" name="sensoro" url="http://192.168.178.21">
+        <fileTransfer rootFolder="/var/www/html/" accessType="SFTP" host="192.168.178.21" port="22" sshConfigId="c90dfb2c-3569-4832-a73e-88cdbd7c8132" sshConfig="pi@192.168.178.21:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

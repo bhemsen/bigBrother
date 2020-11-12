@@ -1,37 +1,53 @@
 import mysql.connector
 import time
 from mysql.connector import Error
-#import Python_DHT
+import RPi.GPIO as GPIO
+import dht11
 
-#sensor = Python_DHT.DHT11
-#pin = 4
+# initialize GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
+
+# read data using pin 14
+instance = dht11.DHT11(pin = 4)
 
 
 db = mysql.connector.connect(
-    host="192.168.178.21",
+    host="localhost",
     user="webadmin",
-    passwd="W05sqSOOuaFdh2XmvKYN",
+    passwd="password",
     database="sensoro"
 )
 
 curser = db.cursor(prepared=True)
-sql_insert_query = "INSERT INTO temperature values(0, CURRENT_DATE(), NOW(), %s)"
+sql_insert_query = "INSERT INTO temperature values(0, CURRENT_DATE(), NOW(), %s, %s)"
 
-temperature = '2'
 while True:
 
-    #temperature = Python_DHT.read_retry(sensor, pin)
-    temperature += '1'
+    result = instance.read()
+
+    while not result.is_valid():  # read until valid values
+        result = instance.read()
+
+    print("Temperature: %-3.1f C" % result.temperature)
+    print("Humidity: %-3.1f %%" % result.humidity)
+
+    temperature = str(result.temperature)
+    humidity = str(result.humidity)
+
 
     try:
-        curser.execute(sql_insert_query, (temperature,), True)
+        curser.execute(sql_insert_query, (temperature,humidity,), True)
         db.commit()
         print ("Data committed")
         
     except mysql.connector.Error as error:
         print("parameterized query failed {}".format(error))
         db.rollback()    
-    time.sleep(5)
+    time.sleep(15)
 
 curser.close()
 db.close()
+
+

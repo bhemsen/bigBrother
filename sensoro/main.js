@@ -16,13 +16,16 @@ let chart = new Chart(canvas, {
             label:'Temperature',
             data: [],
             borderColor: '#ff6666',
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            borderWidth: "1px"
         },
         {
             label:'humidity',
             data: [],
             borderColor: '#6666ff',
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            borderWidth: "1px"
+
         }]
     },
     options:{

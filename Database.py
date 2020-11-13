@@ -61,6 +61,31 @@ class Database:
                 time.sleep(2500000)
 
         
+    def getAllowdRFIDS(self):
+        sql = "SELECT rfid,name FROM rfid WHERE securityLevel = 1 OR securityLevel = 2"
+        try:
+            self.cursor.execute(sql)
+            print ("data recieved")
+            
+            result = self.cursor.fetchall()
+
+            for row in result:
+                print(type(row))
+                print(row)
+
+
+        except mysql.connector.Error as error:
+            print("parameterized query failed {}".format(error))
+            self.db.rollback()   
+
+
+
+
+
+
+
+
+
 
     def close(self):
         self.cursor.close()

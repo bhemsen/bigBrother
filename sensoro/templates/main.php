@@ -17,7 +17,7 @@
     </section>
 
     <section>
-        <iframe width="1185" height="948" src="http://localhost:8081" frameborder="1px"></iframe>
+        <iframe src="http://localhost:8081" frameborder="0"></iframe>
     </section>
 
 </div>

@@ -157,8 +157,6 @@ function updateArrays(){
 
 }
 
-
-
 getTemperatureInitial();
 getHumidityInitial();
 updateArrays();

@@ -24,6 +24,9 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
+import random
+import Database
+from Database import Database
 
 continue_reading = True
 
@@ -77,7 +80,7 @@ while continue_reading:
 
             # Fill the data with 0xFF
             for x in range(0,16):
-                data.append(0xFF)
+                data.append(random.randint(0,255))
 
             print("Sector 8 looked like this:")
             # Read block 8
@@ -87,23 +90,18 @@ while continue_reading:
             print("Sector 8 will now be filled with 0xFF:")
             # Write the data
             MIFAREReader.MFRC522_Write(8, data)
+            
+            ############################  Here the sql Instert ############################
+            db = Database("localhost", "webadmin", "password", "sensoro")
+            db.addNewRFID(data)
+
+
+
+
+
             print("\n")
 
             print("It now looks like this:")
-            # Check to see if it was written
-            MIFAREReader.MFRC522_Read(8)
-            print("\n")
-
-            data = []
-            # Fill the data with 0x00
-            for x in range(0,16):
-                data.append(0x00)
-
-            print("Now we fill it with 0x00:")
-            MIFAREReader.MFRC522_Write(8, data)
-            print("\n")
-
-            print("It is now empty:")
             # Check to see if it was written
             MIFAREReader.MFRC522_Read(8)
             print("\n")

@@ -7,6 +7,10 @@ import signal
 import busio
 import board as board1
 import adafruit_character_lcd.character_lcd_i2c as character_lcd
+import Database 
+from Database import Database
+import ast
+
 
 # Definiere LCD Zeilen und Spaltenanzahl.
 lcd_columns = 16
@@ -18,50 +22,61 @@ lcd = character_lcd.Character_LCD_I2C(i2c, lcd_columns, lcd_rows, 0x21)
 
 continue_reading = True
  
-def entry(sample_var):
+def entry(name):
     # Skript starten, Daten loggen, etc.
-    print("Moooooin Meister")
     lcd.backlight = True
-    lcd.message = ("Geiler Typ\nViel Erfolg!")
+    lcd.message = (name +", du geiler Typ\nViel Erfolg!")
     time.sleep(5.0)
     lcd.backlight = False
     lcd.clear()
     MIFAREReader.MFRC522_StopCrypto1()
 
-def noentry(sample_var1):
+def noentry(name):
     print ("Kein Zutritt!")
     lcd.backlight = True
-    lcd.message = ("Kein Zutritt\nFrag den Admin")
+    lcd.message = ("Kein Zutritt, "+ name + "\nFrag den Admin")
     time.sleep(5.0)
     lcd.backlight = False
     lcd.clear()
     MIFAREReader.MFRC522_StopCrypto1()
     
-def nichtbekannt(sample_var2):
+def unknown():
     print("Karte nicht bekannt")
     lcd.backlight = True
     lcd.message = ("----!Hau ab!----\n----!SOFORT!----")
     lcd.backlight = False
     time.sleep(1.0)
-    lcd.backlight = True
-    time.sleep(1.0)
-    lcd.backlight = False
-    time.sleep(1.0)
-    lcd.backlight = True
-    time.sleep(1.0)
-    lcd.backlight = False
-    time.sleep(1.0)
-    lcd.backlight = True
-    time.sleep(1.0)
-    lcd.backlight = False
+    for i in range(4):
+        lcd.backlight = True
+        time.sleep(.7)
+        lcd.backlight = False
+        time.sleep(.7)
     lcd.clear()
     MIFAREReader.MFRC522_StopCrypto1()
+
+
+def compareKeyWithDatabaseKeys(key):
+    db = Database("localhost", "webadmin", "password", "sensoro")
+    result = db.getAllowdRFIDS()
+    for i in range(len(result)-1):
+        allowedKey = ast.literal_eval(result[i][0])
+        securityLevel = result[i][2]
+        name = result[i][1]
+        if allowedKey == key:
+            if securityLevel == 2:
+                entry(name)
+
+            elif securityLevel == 1:
+                noentry(name)
+            else: 
+                unknown()
+
 # ...
  
 MIFAREReader = MFRC522.MFRC522()
 # die ersten 9 Ziffern sind der Authentifizierungscode
-authcode = [34, 36, 37, 77, 55, 1, 1, 1, 1]
-noauthcode = [10, 10, 10, 10, 10, 10, 10, 10, 10]
+#authcode = [34, 36, 37, 77, 55, 1, 1, 1, 1]
+#noauthcode = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 #unbekannt = [0, 0, 0, 0, 0, 0, 0, 0, 0]
  
 try:
@@ -82,16 +97,8 @@ try:
             if status == MIFAREReader.MI_OK:
                 # Read block 8
                 data = MIFAREReader.MFRC522_Read(8)
-                if data[:9] == authcode:
-                    entry(data)
-                    
-                elif data[:9] == noauthcode:
-                    noentry(data)
-                    
-                else:
-                    nichtbekannt(data)
-              
-                   
+                compareKeyWithDatabaseKeys(data[:9])
+                       
 except KeyboardInterrupt:
     print("Abbruch")
     GPIO.cleanup()

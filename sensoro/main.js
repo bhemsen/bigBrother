@@ -53,7 +53,7 @@ function addDataHum(chart, data) {
 function getTemperatureInitial() {
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost/sensoro/functions/getTemperature.php', true)
+    xhr.open("POST", 'http://localhost/functions/getTemperature.php', true)
     xhr.onload = function () {
         if(xhr.status === 200){
             let result = JSON.parse(this.response);
@@ -78,7 +78,7 @@ function getTemperatureUpdate(){
     labels = [];
     temperatures = [];
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost/sensoro/functions/getTemperatureUpdate.php', true)
+    xhr.open("POST", 'http://localhost/functions/getTemperatureUpdate.php', true)
     xhr.onload = function () {
         if(xhr.status === 200){
             let result = JSON.parse(this.response);
@@ -103,7 +103,7 @@ function getTemperatureUpdate(){
 function getHumidityInitial() {
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost/sensoro/functions/getHumidity.php', true)
+    xhr.open("POST", 'http://localhost/functions/getHumidity.php', true)
     xhr.onload = function () {
         if(xhr.status === 200){
             let result = JSON.parse(this.response);
@@ -127,7 +127,7 @@ function getHumidityUpdate(){
     labels = [];
     temperatures = [];
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost/sensoro/functions/getHumidityUpdate.php', true)
+    xhr.open("POST", 'http://localhost/functions/getHumidityUpdate.php', true)
     xhr.onload = function () {
         if(xhr.status === 200){
             let result = JSON.parse(this.response);

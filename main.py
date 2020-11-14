@@ -1,4 +1,5 @@
-import asyncio
+import threading
+import time
 import RPi.GPIO as GPIO
 import dht11
 import Database
@@ -16,12 +17,27 @@ instance = dht11.DHT11(pin = 4)
 db = Database("localhost", "webadmin", "password", "sensoro")
 
 
-def asyncRun():
-    asyncio.run(db.insertTemperetureAndHumidity(instance))
-    asyncio.run(db.cleanUp("7"))
 
+#initialize threading
+class FuncThread(threading.Thread):
+    def __init__(self, target, *args):
+        self._target = target
+        self._args = args
+        threading.Thread.__init__(self)
+ 
+    def run(self):
+        self._target(*self._args)
+ 
 
-asyncRun()
+t1 = FuncThread(db.insertTemperetureAndHumidity, instance)
+t2 = FuncThread(db.cleanUp, "7")
+t3 = FuncThread(db.getAllowdRFIDS)
 
-db.getAllowdRFIDS()
+t1.start()
+t2.start()
+t3.start()
+
+t1.join()
+t2.join()
+t3.join()
 db.close()

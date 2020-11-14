@@ -1,5 +1,5 @@
 import mysql.connector
-import asyncio
+import time
 from mysql.connector import Error
 
 class Database:
@@ -42,7 +42,7 @@ class Database:
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
                 self.db.rollback()   
-                asyncio.sleep(15)
+                time.sleep(15)
 
     #days needs to be a string   
     def cleanUp(self, days):
@@ -58,11 +58,12 @@ class Database:
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
                 self.db.rollback()    
-                asyncio.sleep(2500000)
+                time.sleep(2500000)
 
         
     def getAllowdRFIDS(self):
-        sql = "SELECT rfid,name FROM rfid WHERE securityLevel = 1 OR securityLevel = 2"
+        data = []
+        sql = "SELECT rfid,name,securityLevel FROM rfid WHERE securityLevel = 1 OR securityLevel = 2"
         try:
             self.cursor.execute(sql)
             print ("data recieved")
@@ -70,19 +71,32 @@ class Database:
             result = self.cursor.fetchall()
 
             for row in result:
-                print(type(row))
-                print(row)
-
+                row = list(row)
+                data.append(row)
+            return data
 
         except mysql.connector.Error as error:
             print("parameterized query failed {}".format(error))
             self.db.rollback()   
 
 
+    def addNewRFID(self, data):
+        self.data = str(data)
+        sql = "INSERT INTO `rfid` (`ID`, `name`, `securityLevel`, `rfid`) VALUES (NULL, %s, %s, %s)"
+        name = input("Name: ")
+        securityLevel = 0
 
+        while not (securityLevel == "1" or securityLevel == "2"):
+            securityLevel = str(input("2 für Leitende Mitarbeiter, 1 für Angestellte : "))
+    
+        try:
+            self.cursor.execute(sql, (name, securityLevel, self.data,))
+            self.db.commit()
+            print('Daten wurden gesetzt')
 
-
-
+        except mysql.connector.Error as error:
+            print("parameterized query failed {}".format(error))
+            self.db.rollback() 
 
 
 

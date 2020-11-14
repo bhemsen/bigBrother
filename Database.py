@@ -1,5 +1,5 @@
 import mysql.connector
-import asyncio
+import time
 from mysql.connector import Error
 
 class Database:
@@ -42,7 +42,7 @@ class Database:
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
                 self.db.rollback()   
-                asyncio.sleep(15)
+                time.sleep(15)
 
     #days needs to be a string   
     def cleanUp(self, days):
@@ -58,7 +58,7 @@ class Database:
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
                 self.db.rollback()    
-                asyncio.sleep(2500000)
+                time.sleep(2500000)
 
         
     def getAllowdRFIDS(self):

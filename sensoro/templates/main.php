@@ -17,7 +17,23 @@
     </section>
 
     <section>
-        <iframe src="http://localhost:8081" frameborder="0"></iframe>
+        <div class="d-flex justify-content-around">
+            <iframe src="http://localhost:8081" frameborder="0"></iframe>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Zeit</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">RFID</th>
+                            <th scope="col">Zutritt</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+                <button id="refresh" class="btn btn-primary">Aktualisieren</button>
+            </div>
+        </div>
     </section>
 
 </div>

@@ -17,14 +17,14 @@ let chart = new Chart(canvas, {
             data: [],
             borderColor: '#ff6666',
             backgroundColor: 'transparent',
-            borderWidth: "1px"
+            borderWidth: 2
         },
         {
             label:'humidity',
             data: [],
             borderColor: '#6666ff',
             backgroundColor: 'transparent',
-            borderWidth: "1px"
+            borderWidth: 2
 
         }]
     },
@@ -147,11 +147,56 @@ function getHumidityUpdate(){
 
 }
 
+
+function createTableEntry(result) {
+
+    for (let tupel in result) {
+        let tbodyRef = document.getElementById('tbody')
+        let array = [];
+        array.push(result[tupel].time, result[tupel].name,result[tupel].rfid, result[tupel].access);
+        // Insert a row at the end of table
+        let newRow = tbodyRef.insertRow();
+
+        for (let i = 0; i < array.length; i++){
+             // Insert a cell at the end of the row
+            let newCell = newRow.insertCell();
+            newCell.innerText = array[i];
+            
+        }   
+    }
+
+}
+
+function refreshTable(){
+    let tbody = document.getElementById('tbody');
+    tbody.innerHTML = "";
+}
+
+function getEntrylog() {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://localhost/functions/getEntrylogging.php', true)
+    xhr.onload = function () {
+        if(xhr.status === 200){
+            let result = JSON.parse(this.response);
+            
+            createTableEntry(result);
+        
+        } else {
+            console.log(xhr.status);
+            return;
+        }
+    };
+    xhr.send();
+}
+
+
 function updateArrays(){
     
     setInterval(function(){ 
         getTemperatureUpdate();
         getHumidityUpdate();
+        getEntrylog()
         
     }, 15000);
 
@@ -159,4 +204,19 @@ function updateArrays(){
 
 getTemperatureInitial();
 getHumidityInitial();
+getEntrylog()
 updateArrays();
+
+window.onload = function(){
+    let refreshTableBtn = document.getElementById('refresh');
+    console.log(refreshTableBtn);
+    refreshTableBtn.addEventListener('click', ()=>{
+        refreshTable();
+        getEntrylog();
+    });
+}
+
+
+
+
+

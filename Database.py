@@ -99,6 +99,19 @@ class Database:
             self.db.rollback() 
 
 
+    def logEntry(self, name , rfid, access):
+        self.name = name
+        self.rfid  = str(rfid)
+        self.access = access
+        sql = "INSERT INTO `entrylog` (`ID`, `time`, `name`, `rfid`, `access`) VALUES (NULL, current_timestamp(), %s, %s, %s)"
+
+        try:
+            self.cursor.execute(sql, (self.name, self.rfid, self.access,))
+
+        except mysql.connector.Error as error:
+            print("parameterized query failed {}".format(error))
+            self.db.rollback()
+        
 
 
     def close(self):

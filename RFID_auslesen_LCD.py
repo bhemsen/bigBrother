@@ -65,11 +65,21 @@ def compareKeyWithDatabaseKeys(key):
         if allowedKey == key:
             if securityLevel == 2:
                 entry(name)
+                access = "granted"
+                db.logEntry(name , key, access)
 
             elif securityLevel == 1:
                 noentry(name)
+                access = "denied"
+                db.logEntry(name , key, access)
+
+
             else: 
                 unknown()
+                name = "unknown"
+                access = "denied"
+                db.logEntry(name , key, access)
+
 
 # ...
  

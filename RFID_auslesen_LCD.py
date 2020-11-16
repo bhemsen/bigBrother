@@ -97,6 +97,7 @@ try:
         if status == MIFAREReader.MI_OK:
             # Get the UID of the card
             (status,uid) = MIFAREReader.MFRC522_Anticoll()
+            print(uid)
             # This is the default key for authentication
             key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
             # Select the scanned tag

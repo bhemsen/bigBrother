@@ -54,7 +54,6 @@ def unknown():
     lcd.clear()
     MIFAREReader.MFRC522_StopCrypto1()
 
-
 def compareKeyWithDatabaseKeys(key):
     db = Database("localhost", "webadmin", "password", "sensoro")
     result = db.getAllowdRFIDS()
@@ -63,23 +62,24 @@ def compareKeyWithDatabaseKeys(key):
         allowedKey = ast.literal_eval(result[i][0])
         securityLevel = result[i][2]
         name = result[i][1]
+        print(allowedKey)
         if allowedKey == key:
             if securityLevel == 2:
                 entry(name)
                 access = "granted"
                 db.logEntry(name , key, access)
+                return
 
-            elif securityLevel == 1:
+            else:
                 noentry(name)
                 access = "denied"
                 db.logEntry(name , key, access)
+                return
 
-
-        else: 
-            unknown()
-            name = "unknown"
-            access = "denied"
-            db.logEntry(name , key, access)
+    unknown()
+    name = "unknown"
+    access = "denied"
+    db.logEntry(name , key, access)
 
 
 # ...

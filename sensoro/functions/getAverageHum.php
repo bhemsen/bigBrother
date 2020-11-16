@@ -4,7 +4,7 @@ require '../includes.php';
 
 function getHumidity(){
     $sql = "SELECT humidity,time 
-        FROM temperature WHERE ID % 2 = 0";
+        FROM temperature WHERE ID % 240 = 0";
 
     $con = getDB();
 

@@ -4,7 +4,7 @@ require '../includes.php';
 
 function getTemperature(){
     $sql = "SELECT temperature,time 
-        FROM temperature WHERE ID % 2 = 0";
+        FROM temperature WHERE ID % 240 = 0";
 
     $con = getDB();
 

@@ -299,7 +299,7 @@ function refreshTable(){
 function getEntrylog() {
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost/functions/getEntrylogging.php', true)
+    xhr.open("POST", 'http://localhost/functions/getEntryLogging.php', true)
     xhr.onload = function () {
         if(xhr.status === 200){
             let result = JSON.parse(this.response);

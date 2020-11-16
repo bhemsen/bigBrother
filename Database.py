@@ -73,7 +73,7 @@ class Database:
             for row in result:
                 row = list(row)
                 data.append(row)
-                
+
             print ("data recieved")
             return data
 
@@ -109,6 +109,7 @@ class Database:
 
         try:
             self.cursor.execute(sql, (self.name, self.rfid, self.access,))
+            
 
         except mysql.connector.Error as error:
             print("parameterized query failed {}".format(error))

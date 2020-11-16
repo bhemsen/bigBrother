@@ -335,16 +335,18 @@ function main(){
     getTemperatureAverage();
     getEntrylog()
     updateArrays();
-
-    window.onload = function(){
-        let refreshTableBtn = document.getElementById('refresh');
-        console.log(refreshTableBtn);
-        refreshTableBtn.addEventListener('click', ()=>{
-            refreshTable();
-            getEntrylog();
-        });
-    }
-
 }
 
-main();
+
+window.onload = function(){
+    let refreshTableBtn = document.getElementById('refresh');
+    console.log(refreshTableBtn);
+    refreshTableBtn.addEventListener('click', ()=>{
+        refreshTable();
+        getEntrylog();
+    });
+
+    main();
+}
+
+

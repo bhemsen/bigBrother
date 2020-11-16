@@ -66,13 +66,15 @@ class Database:
         sql = "SELECT rfid,name,securityLevel FROM rfid WHERE securityLevel = 1 OR securityLevel = 2"
         try:
             self.cursor.execute(sql)
-            print ("data recieved")
+            
             
             result = self.cursor.fetchall()
 
             for row in result:
                 row = list(row)
                 data.append(row)
+                
+            print ("data recieved")
             return data
 
         except mysql.connector.Error as error:

@@ -340,11 +340,13 @@ function main(){
 
 window.onload = function(){
     let refreshTableBtn = document.getElementById('refresh');
-    console.log(refreshTableBtn);
     refreshTableBtn.addEventListener('click', ()=>{
         refreshTable();
         getEntrylog();
     });
+
+    let iFrame = document.getElementById('iframe');
+    iFrame.setAttribute("src", iFrame.dataset.src) 
 
     main();
 }

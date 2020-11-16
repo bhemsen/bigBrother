@@ -109,6 +109,7 @@ class Database:
 
         try:
             self.cursor.execute(sql, (self.name, self.rfid, self.access,))
+            self.db.commit()
             
 
         except mysql.connector.Error as error:

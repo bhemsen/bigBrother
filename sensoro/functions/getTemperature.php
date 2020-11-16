@@ -4,7 +4,7 @@ require '../includes.php';
 
 function getTemperature(){
     $sql = "SELECT temperature,time 
-        FROM temperature";
+        FROM temperature WHERE date = CURRENT_DATE()";
 
     $con = getDB();
 

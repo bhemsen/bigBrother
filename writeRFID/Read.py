@@ -24,9 +24,6 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
-import random
-import Database
-from Database import Database
 
 continue_reading = True
 
@@ -42,6 +39,10 @@ signal.signal(signal.SIGINT, end_read)
 
 # Create an object of the class MFRC522
 MIFAREReader = MFRC522.MFRC522()
+
+# Welcome message
+print("Welcome to the MFRC522 data read example")
+print("Press Ctrl-C to stop.")
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
 while continue_reading:
@@ -70,56 +71,11 @@ while continue_reading:
 
         # Authenticate
         status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-        print("\n")
 
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
-
-            # Variable for the data to write
-            data = []
-
-            # Fill the data with 0xFF
-            for x in range(0,16):
-                data.append(0xFF)
-
-            print("Sector 8 looked like this:")
-            # Read block 8
             MIFAREReader.MFRC522_Read(8)
-            print("\n")
-
-            print("Sector 8 will now be filled with 0xFF:")
-            # Write the data
-            MIFAREReader.MFRC522_Write(8, data)
-            print("\n")
-
-            print("It now looks like this:")
-            # Check to see if it was written
-            MIFAREReader.MFRC522_Read(8)
-            print("\n")
-
-            data = []
-            # Fill the data with 0x00
-            for x in range(0,16):
-                data.append(random.randint(0,255))
-
-            print("Now we fill it with 0x00:")
-            MIFAREReader.MFRC522_Write(8, data)
-            print("\n")
-
-            print("It is new:")
-            # Check to see if it was written
-            MIFAREReader.MFRC522_Read(8)
-            print("\n")
-
-            ############################  Here the sql Instert ############################
-            db = Database("localhost", "webadmin", "password", "sensoro")
-            db.addNewRFID(data)
-
-
-            # Stop
             MIFAREReader.MFRC522_StopCrypto1()
-
-            # Make sure to stop reading for cards
-            continue_reading = False
         else:
             print("Authentication error")
+

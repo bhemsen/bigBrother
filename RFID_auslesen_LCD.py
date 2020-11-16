@@ -58,7 +58,7 @@ def unknown():
 def compareKeyWithDatabaseKeys(key):
     db = Database("localhost", "webadmin", "password", "sensoro")
     result = db.getAllowdRFIDS()
-    print(result)
+
     for i in range(len(result)-1):
         allowedKey = ast.literal_eval(result[i][0])
         securityLevel = result[i][2]
@@ -75,11 +75,11 @@ def compareKeyWithDatabaseKeys(key):
                 db.logEntry(name , key, access)
 
 
-            else: 
-                unknown()
-                name = "unknown"
-                access = "denied"
-                db.logEntry(name , key, access)
+        else: 
+            unknown()
+            name = "unknown"
+            access = "denied"
+            db.logEntry(name , key, access)
 
 
 # ...

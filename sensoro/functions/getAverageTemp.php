@@ -2,14 +2,8 @@
 
 require '../includes.php';
 
-$sql = SELECT AVG(a.temperature) AS avg 
-FROM ( SELECT temperature as temperature, HOUR(time) as hour
-       FROM temperature
-       GROUP BY hour) AS a;
-
-function getTemperature(){
-    $sql = "SELECT temperature,time 
-        FROM temperature WHERE ID % 240 = 0";
+function getAverageTemperature(){
+    $sql = "SELECT day,HOUR(time) as HOUR, avg(temperature) as temperature FROM `temperature` GROUP by day , HOUR(time)";
 
     $con = getDB();
 
@@ -31,4 +25,4 @@ function getTemperature(){
 
 }
 
-echo getTemperature();
+echo getAverageTemperature();

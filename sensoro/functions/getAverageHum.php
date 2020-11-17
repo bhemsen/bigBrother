@@ -2,9 +2,8 @@
 
 require '../includes.php';
 
-function getHumidity(){
-    $sql = "SELECT humidity,time 
-        FROM temperature WHERE ID % 240 = 0";
+function getAverageHumidity(){
+    $sql = "SELECT day,HOUR(time) as HOUR,avg(humidity) as humidity FROM `temperature` GROUP by day , HOUR(time)";
 
     $con = getDB();
 
@@ -26,4 +25,4 @@ function getHumidity(){
 
 }
 
-echo getHumidity();
+echo getAverageHumidity();

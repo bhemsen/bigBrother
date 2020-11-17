@@ -84,7 +84,6 @@ class Database:
 
     def addNewRFID(self, data):
         self.data = str(data)
-        print(data)
         sql = "INSERT INTO `rfid` (`ID`, `name`, `securityLevel`, `rfid`) VALUES (NULL, %s, %s, %s)"
         name = input("Name: ")
         securityLevel = 0

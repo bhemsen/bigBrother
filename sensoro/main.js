@@ -132,7 +132,7 @@ function getTemperatureInitial() {
             
                 
         for (let tupel in result) {
-            labels.push(result[tupel].time);
+            labels.push(result[tupel].HOUR);
             temperatures.push(parseFloat(result[tupel].temperature));
             addDataTemp(chart, labels[tupel], temperatures[tupel]); 
         }
@@ -156,7 +156,7 @@ function getTemperatureAverage() {
             
                 
         for (let tupel in result) {
-            labelsAverage.push(result[tupel].time);
+            labelsAverage.push(result[tupel].HOUR);
             temperaturesAverage.push(parseFloat(result[tupel].temperature));
             addDataTemp(chartAverage, labelsAverage[tupel], temperaturesAverage[tupel]); 
         }
@@ -182,7 +182,7 @@ function getTemperatureUpdate(){
             
                 
         for (let tupel in result) {
-            labels.push(result[tupel].time);
+            labels.push(result[tupel].HOUR);
             temperatures.push(parseFloat(result[tupel].temperature));
             addDataTemp(chart, labels[tupel], temperatures[tupel]); 
             currTemp.innerText = temperatures[tupel];

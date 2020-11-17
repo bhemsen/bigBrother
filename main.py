@@ -22,18 +22,23 @@ db = Database("localhost", "webadmin", "password", "sensoro")
 class FirstThread(threading.Thread):
  
     def run(self):
-        db.insertTemperetureAndHumidity(instance)
+        while True:
+            db.insertTemperetureAndHumidity(instance)
+            time.sleep(15)
 
 class SecondThread(threading.Thread):
  
-    def run(self):
-        db.cleanUp("7")
+    def run(self)::
+        while True
+            db.cleanUp("7")
+            time.sleep(2000000)
 
 class ThirdThread(threading.Thread):
  
     def run(self):
-        db.getAllowdRFIDS()
-
+        while True:
+            db.getAllowdRFIDS()
+            time.sleep(2)
 
 t1 = FirstThread()
 t2 = SecondThread()

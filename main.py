@@ -28,8 +28,8 @@ class FirstThread(threading.Thread):
 
 class SecondThread(threading.Thread):
  
-    def run(self)::
-        while True
+    def run(self):
+        while True:
             db.cleanUp("7")
             time.sleep(2000000)
 

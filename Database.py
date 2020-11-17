@@ -31,8 +31,8 @@ class Database:
             print("Temperature: %-3.1f C" % result.temperature)
             print("Humidity: %-3.1f %%" % result.humidity)
             
-            temperature = str(result.temperature)
-            humidity = str(result.humidity)
+            temperature = float(result.temperature)
+            humidity = float(result.humidity)
             
             try:
                 self.cursor.execute(sql, (temperature,humidity,), True)

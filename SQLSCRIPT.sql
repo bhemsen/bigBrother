@@ -8,8 +8,8 @@ CREATE TABLE `temperature` (
   `ID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `day` date NOT NULL,
   `time` time NOT NULL,
-  `temperature` varchar(16),
-  `humidity` varchar(16)
+  `temperature` float,
+  `humidity` float
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `sensoro`.`securitylevel` ( 
@@ -37,6 +37,6 @@ CREATE TABLE `sensoro`.`entrylog` (
   `ID` INT NOT NULL AUTO_INCREMENT , 
   `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
   `name` VARCHAR(32) NOT NULL, 
-  `rfid` VARCHAR(128) NOT NULL , 
+  `rfid` VARCHAR(255) NOT NULL , 
   `access` VARCHAR(32) NOT NULL , 
   PRIMARY KEY (`ID`)) ENGINE = InnoDB;

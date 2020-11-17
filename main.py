@@ -31,7 +31,7 @@ class FuncThread(threading.Thread):
 
 t1 = FuncThread(db.insertTemperetureAndHumidity, instance)
 t2 = FuncThread(db.cleanUp, "7")
-t3 = FuncThread(db.getAllowdRFIDS)
+t3 = FuncThread(db.getAllowdRFIDS, ())
 
 t1.start()
 t2.start()
@@ -40,4 +40,6 @@ t3.start()
 t1.join()
 t2.join()
 t3.join()
+
+
 db.close()

@@ -58,8 +58,9 @@ def compareKeyWithDatabaseKeys(key):
     db = Database("localhost", "webadmin", "password", "sensoro")
     result = db.getAllowdRFIDS()
 
-    for i in range(len(result)-1):
-        allowedKey = ast.literal_eval(result[i][0])
+    for i in range(len(result)):
+        respondKey = ast.literal_eval(result[i][0])
+        allowedKey = respondKey(:9)
         securityLevel = result[i][2]
         name = result[i][1]
         print(allowedKey)

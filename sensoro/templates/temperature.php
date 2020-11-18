@@ -3,8 +3,8 @@
 
 <section>
         <ul>
-            <li>aktuelle Temperatur: <span id="temp"></span></li>
-            <li>aktuelle Luftfeutchtigkeit: <span id="humidity"></span></li>
+            <li>aktuelle Temperatur: <span id="temp"></span> °C</li>
+            <li>aktuelle Luftfeutchtigkeit: <span id="humidity"></span> %</li>
         </ul>
 
 </section> 

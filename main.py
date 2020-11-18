@@ -79,5 +79,5 @@ if __name__ == "__main__":
         myClassC().stop()
     
     db.close()
-    GPIO.cleanup()
+    #GPIO.cleanup()
 

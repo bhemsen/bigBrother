@@ -1,2 +1,2 @@
 Options +ExecCGI
-SetHandler cgi-script py
+AddHandler cgi-script cgi pl py

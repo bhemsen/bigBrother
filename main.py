@@ -1,9 +1,16 @@
+#import sys
+# insert at 1, 0 is the script path (or '' in REPL)
+#sys.path.insert(1, '/home/pi/bigBrother/sensoro/functions')
+#import functions
 from threading import Thread
 import time
 import RPi.GPIO as GPIO
 import dht11
 import Database
 from Database import Database
+
+
+
 
 # initialize GPIOS
 GPIO.setwarnings(False)

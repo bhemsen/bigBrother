@@ -48,7 +48,7 @@ class Database:
     #days needs to be a string   
     def cleanUp(self, days):
         sql = "DELETE FROM temperature WHERE DATEDIFF(day, NOW()) <= %s"
-        self.days = days
+        self.days = str(days)
 
         while True:
             try:

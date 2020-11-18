@@ -1,6 +1,3 @@
-<h1>sensoro</h1>
-
-<div class="container d-flex justify-content-center">
     <section>
         <div class="d-flex justify-content-around">
             <iframe id="iframe" src="" data-src="http://localhost:8081" frameborder="0"></iframe>
@@ -35,4 +32,3 @@
             <canvas id="avarage-chart"></canvas>
     </section>
   
-</div>

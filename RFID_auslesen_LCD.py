@@ -109,6 +109,6 @@ try:
                 data = MIFAREReader.MFRC522_Read(8)
                 compareKeyWithDatabaseKeys(data[:9])
                        
-#except KeyboardInterrupt:
-  #  print("Abbruch")
+except KeyboardInterrupt:
+    print("Abbruch")
   #  GPIO.cleanup()

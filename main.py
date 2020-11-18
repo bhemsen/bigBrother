@@ -4,7 +4,6 @@ import RPi.GPIO as GPIO
 import dht11
 import Database
 from Database import Database
-import RFID_auslesen_LCD
 
 # initialize GPIOS
 GPIO.setwarnings(False)
@@ -56,7 +55,6 @@ class myClassC(Thread):
         self.daemon = True
         self.start()
     def run(self):
-        while self.running:
             exec(open('./RFID_auslesen_LCD.py').read())
         
     def stop(self):

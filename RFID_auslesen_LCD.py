@@ -12,6 +12,7 @@ from Database import Database
 import ast
 
 
+
 # Definiere LCD Zeilen und Spaltenanzahl.
 lcd_columns = 16
 lcd_rows    = 2

@@ -124,7 +124,3 @@ class Database:
         self.db.close()
 
         
-
-
-    def test(self, number):
-        print(number)

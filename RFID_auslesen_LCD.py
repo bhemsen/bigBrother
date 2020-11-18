@@ -87,9 +87,6 @@ def compareKeyWithDatabaseKeys(key):
  
 MIFAREReader = MFRC522.MFRC522()
 # die ersten 9 Ziffern sind der Authentifizierungscode
-#authcode = [34, 36, 37, 77, 55, 1, 1, 1, 1]
-#noauthcode = [10, 10, 10, 10, 10, 10, 10, 10, 10]
-#unbekannt = [0, 0, 0, 0, 0, 0, 0, 0, 0]
  
 try:
     while True:
@@ -112,6 +109,6 @@ try:
                 data = MIFAREReader.MFRC522_Read(8)
                 compareKeyWithDatabaseKeys(data[:9])
                        
-except KeyboardInterrupt:
-    print("Abbruch")
-    GPIO.cleanup()
+#except KeyboardInterrupt:
+  #  print("Abbruch")
+  #  GPIO.cleanup()

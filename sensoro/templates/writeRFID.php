@@ -14,9 +14,12 @@
     </div>
     <div class="form-group">
         <label for="securityLevel">Sicherheitsstufe: </label>
-        <input name="securityLevel" id="securityLevel" type="number">
+        <input name="securityLevel" class="form-control" id="securityLevel" type="number">
+        <small  class="form-text text-muted">
+    1 für Angestellte, 2 Für Leitende Angestellte
+</small>
     </div>
-    <button class="btn btn-primary" class="form-control" type="submit">Schreiben</button>
+    <button class="btn btn-primary" type="submit">Schreiben</button>
 </form>
 
 <?php require 'footer.php';?>

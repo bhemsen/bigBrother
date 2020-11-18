@@ -1,40 +1,70 @@
+import threading
+import time
+
 import Database
 from Database import Database
-import ast
-
-key = [1,2,3,4,5,6,7,8,9]
-key = [4,4,4,4,4,4,4,4]
 
 
 
-def compareKeyWithDatabaseKeys(key):
-    db = Database("localhost", "webadmin", "password", "sensoro")
-    result = db.getAllowdRFIDS()
-
-    for i in range(len(result)-1):
-        allowedKey = ast.literal_eval(result[i][0])
-        securityLevel = result[i][2]
-        name = result[i][1]
-        print(allowedKey)
-        if allowedKey == key:
-            if securityLevel == 2:
-                entry(name)
-                access = "granted"
-                db.logEntry(name , key, access)
-                return
-
-            else:
-                noentry(name)
-                access = "denied"
-                db.logEntry(name , key, access)
-                return
-
-    unknown()
-    name = "unknown"
-    access = "denied"
-    db.logEntry(name , key, access)
+#initialize database connection
+db = Database("localhost", "webadmin", "password", "sensoro")
 
 
-for i in range(10):
-    compareKeyWithDatabaseKeys(key)
-    print(i)
+
+#initialize threading
+class FirstThread(threading.Thread):
+ 
+    def run(self):
+        exec(open('test2.py').read())
+        print('firt')
+    
+
+class SecondThread(threading.Thread):
+ 
+    def run(self):
+        print('data send second Thread')
+    
+
+class ThirdThread(threading.Thread):
+ 
+    def run(self):
+        print('data send third Thread')
+
+
+def runThread1():
+    t1.run()
+    t1.join()
+    time.sleep(15)
+
+
+def runThread2():
+    t2.run()
+    t2.join()
+    time.sleep(30)
+
+
+def runThread3():
+    t3.run()
+    t3.join()
+    time.sleep(5)
+
+try:
+    t1 = FirstThread()
+    t2 = SecondThread()
+    t3 = ThirdThread()
+
+    t1.start()
+    t2.start()
+    t3.start()
+
+
+    while True:
+        runThread1()
+        runThread2()
+        runThread3()
+
+    db.close()
+
+
+except KeyboardInterrupt:
+    print("Abbruch")

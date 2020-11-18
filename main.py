@@ -6,17 +6,6 @@ import Database
 from Database import Database
 import RFID_auslesen_LCD
 
-# initialize GPIOS
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.cleanup()
-
-#read data using pin 14
-instance = dht11.DHT11(pin = 4)
-
-#initialize database connection
-db = Database("localhost", "webadmin", "password", "sensoro")
-days = "7"
 
 
 
@@ -63,6 +52,19 @@ class myClassC(Thread):
         self.running = False
 
 if __name__ == "__main__":
+
+    # initialize GPIOS
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.cleanup()
+
+    #read data using pin 14
+    instance = dht11.DHT11(pin = 4)
+
+    #initialize database connection
+    db = Database("localhost", "webadmin", "password", "sensoro")
+    days = "7"
+
     
     try:
         myClassA()

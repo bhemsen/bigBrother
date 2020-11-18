@@ -67,7 +67,7 @@ if __name__ == "__main__":
     try:
         myClassA()
         myClassB()
-        myClassC()
+     #   myClassC()
         while True:
             pass
 
@@ -76,8 +76,7 @@ if __name__ == "__main__":
         print("Abbruch")
         myClassA().stop()
         myClassB().stop()
-        myClassC().stop()
+      #  myClassC().stop()
     
     db.close()
-    #GPIO.cleanup()
 

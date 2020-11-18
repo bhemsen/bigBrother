@@ -17,3 +17,5 @@
             <button id="refresh" class="btn btn-primary">Aktualisieren</button>
         </div>
     </section>
+
+    <script type="application/javascript" src="main.js"></script>

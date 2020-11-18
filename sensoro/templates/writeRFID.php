@@ -7,16 +7,16 @@
     Beachte: Das Programm das die Chips ausließt muss vorher beendet werden.
 </small>
 
-<form action="http://localhost/writeRFID/openWrite.py">
+<form action="http://localhost/writeRFID/openWrite.py" method="POST">
     <div class="form-group">
         <label for="name">Name: </label>
-        <input name="name" id="name" type="text">
+        <input name="name" class="form-control" id="name" type="text">
     </div>
     <div class="form-group">
         <label for="securityLevel">Sicherheitsstufe: </label>
         <input name="securityLevel" id="securityLevel" type="number">
     </div>
-    <button class="btn btn-primary" type="submit">Schreiben</button>
+    <button class="btn btn-primary" class="form-control" type="submit">Schreiben</button>
 </form>
 
 <?php require 'footer.php';?>

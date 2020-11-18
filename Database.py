@@ -42,7 +42,8 @@ class Database:
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
                 self.db.rollback()   
-                time.sleep(15)
+            
+            time.sleep(15)
 
     #days needs to be a string   
     def cleanUp(self, days):
@@ -58,7 +59,7 @@ class Database:
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
                 self.db.rollback()    
-                time.sleep(2500000)
+            time.sleep(2500000)
 
         
     def getAllowdRFIDS(self):
@@ -124,3 +125,6 @@ class Database:
 
         
 
+
+    def test(self, number):
+        print(number)

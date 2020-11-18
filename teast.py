@@ -8,63 +8,54 @@ from Database import Database
 
 #initialize database connection
 db = Database("localhost", "webadmin", "password", "sensoro")
-
+days = "7"
+instance = 24
 
 
 #initialize threading
-class FirstThread(threading.Thread):
- 
-    def run(self):
-        exec(open('test2.py').read())
-        print('firt')
-    
 
-class SecondThread(threading.Thread):
- 
-    def run(self):
-        print('data send second Thread')
-    
-
-class ThirdThread(threading.Thread):
- 
-    def run(self):
-        print('data send third Thread')
-
-
-def runThread1():
-    t1.run()
-    t1.join()
-    time.sleep(15)
-
-
-def runThread2():
-    t2.run()
-    t2.join()
-    time.sleep(30)
-
-
-def runThread3():
-    t3.run()
-    t3.join()
-    time.sleep(5)
-
-try:
-    t1 = FirstThread()
-    t2 = SecondThread()
-    t3 = ThirdThread()
-
-    t1.start()
-    t2.start()
-    t3.start()
-
-
+def insertTempHum(instance):
     while True:
-        runThread1()
-        runThread2()
-        runThread3()
+        try:
+            exec(open('./writeDB.py').read())
 
-    db.close()
+        except KeyboardInterrupt:
+            print("Abbruch")
+
+def cleanUp(days):
+    while True:
+        try:
+            exec(open('./test2.py').read())
+            print('bis hier auch')
+
+            time.sleep(30)
+
+        except KeyboardInterrupt:
+            print("Abbruch")
+
+def runRFID():
+    while True:
+        try:
+            exec(open('./test2.py').read())
+
+            time.sleep(2)
+
+        except KeyboardInterrupt:
+            print("Abbruch")
 
 
-except KeyboardInterrupt:
-    print("Abbruch")
+
+if __name__ == "__main__":
+    try:
+        t = threading.Thread(target=insertTempHum, args=(instance,))
+        t2 = threading.Thread(target=cleanUp, args=(days,))
+        t3 = threading.Thread(target=runRFID,)
+        t.start()
+        print('test')
+        t2.start()
+        exec(open('./test2.py').read())
+
+
+
+    except KeyboardInterrupt:
+        print("Abbruch")

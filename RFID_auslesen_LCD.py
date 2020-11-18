@@ -60,7 +60,7 @@ def compareKeyWithDatabaseKeys(key):
 
     for i in range(len(result)):
         respondKey = ast.literal_eval(result[i][0])
-        allowedKey = respondKey(:9)
+        allowedKey = respondKey[:9]
         securityLevel = result[i][2]
         name = result[i][1]
         print(allowedKey)

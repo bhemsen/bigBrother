@@ -1,4 +1,4 @@
-import threading
+from threading import Thread
 import time
 import RPi.GPIO as GPIO
 import dht11
@@ -15,42 +15,66 @@ instance = dht11.DHT11(pin = 4)
 
 #initialize database connection
 db = Database("localhost", "webadmin", "password", "sensoro")
+days = "7"
 
 
 
 #initialize threading
-class FirstThread(threading.Thread):
- 
+
+class myClassA(Thread):
+    def __init__(self):
+        Thread.__init__(self)
+        self.running = True
+        self.daemon = True
+        self.start()
     def run(self):
-        while True:
+        while self.running:
             db.insertTemperetureAndHumidity(instance)
-            time.sleep(15)
 
-class SecondThread(threading.Thread):
- 
+    def stop(self):
+        self.running = False
+            
+
+class myClassB(Thread):
+    def __init__(self):
+        Thread.__init__(self)
+        self.running = True
+        self.daemon = True
+        self.start()
     def run(self):
-        while True:
-            db.cleanUp("7")
-            time.sleep(2000000)
+        while self.running:
+            db.cleanUp(days)
 
-class ThirdThread(threading.Thread):
- 
+    def stop(self):
+        self.running = False
+
+class myClassC(Thread):
+    def __init__(self):
+        Thread.__init__(self)
+        self.running = True
+        self.daemon = True
+        self.start()
     def run(self):
-        while True:
-            db.getAllowdRFIDS()
-            time.sleep(2)
-
-t1 = FirstThread()
-t2 = SecondThread()
-t3 = ThirdThread()
-
-t1.start()
-t2.start()
-t3.start()
-
-t1.join()
-t2.join()
-t3.join()
+        while self.running:
+            exec(open('./RFID_auslesen_LCD.py').read())
+        
+    def stop(self):
+        self.running = False
 
 
-db.close()
+try:
+
+    myClassA()
+    myClassB()
+    myClassC()
+    while True:
+        pass
+
+
+except KeyboardInterrupt:
+    print("Abbruch")
+    myClassA().stop()
+    myClassB().stop()
+    myClassC().stop()
+    db.close()
+

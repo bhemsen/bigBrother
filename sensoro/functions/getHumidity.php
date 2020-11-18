@@ -4,7 +4,8 @@ require '../includes.php';
 
 function getHumidity(){
     $sql = "SELECT humidity,time 
-        FROM temperature WHERE day = CURRENT_DATE()";
+        FROM temperature WHERE day = CURRENT_DATE() 
+        ORDER BY ID DESC LIMIT 20";
 
     $con = getDB();
 

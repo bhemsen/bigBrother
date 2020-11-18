@@ -12,6 +12,7 @@ from Database import Database
 import ast
 
 
+
 # Definiere LCD Zeilen und Spaltenanzahl.
 lcd_columns = 16
 lcd_rows    = 2
@@ -60,7 +61,7 @@ def compareKeyWithDatabaseKeys(key):
 
     for i in range(len(result)):
         respondKey = ast.literal_eval(result[i][0])
-        allowedKey = respondKey(:9)
+        allowedKey = respondKey[:9]
         securityLevel = result[i][2]
         name = result[i][1]
         print(allowedKey)
@@ -87,9 +88,6 @@ def compareKeyWithDatabaseKeys(key):
  
 MIFAREReader = MFRC522.MFRC522()
 # die ersten 9 Ziffern sind der Authentifizierungscode
-#authcode = [34, 36, 37, 77, 55, 1, 1, 1, 1]
-#noauthcode = [10, 10, 10, 10, 10, 10, 10, 10, 10]
-#unbekannt = [0, 0, 0, 0, 0, 0, 0, 0, 0]
  
 try:
     while True:

@@ -1,40 +1,61 @@
+import threading
+import time
+
 import Database
 from Database import Database
-import ast
-
-key = [1,2,3,4,5,6,7,8,9]
-key = [4,4,4,4,4,4,4,4]
 
 
 
-def compareKeyWithDatabaseKeys(key):
-    db = Database("localhost", "webadmin", "password", "sensoro")
-    result = db.getAllowdRFIDS()
-
-    for i in range(len(result)-1):
-        allowedKey = ast.literal_eval(result[i][0])
-        securityLevel = result[i][2]
-        name = result[i][1]
-        print(allowedKey)
-        if allowedKey == key:
-            if securityLevel == 2:
-                entry(name)
-                access = "granted"
-                db.logEntry(name , key, access)
-                return
-
-            else:
-                noentry(name)
-                access = "denied"
-                db.logEntry(name , key, access)
-                return
-
-    unknown()
-    name = "unknown"
-    access = "denied"
-    db.logEntry(name , key, access)
+#initialize database connection
+db = Database("localhost", "webadmin", "password", "sensoro")
+days = "7"
+instance = 24
 
 
-for i in range(10):
-    compareKeyWithDatabaseKeys(key)
-    print(i)
+#initialize threading
+
+def insertTempHum(instance):
+    while True:
+        try:
+            exec(open('./writeDB.py').read())
+
+        except KeyboardInterrupt:
+            print("Abbruch")
+
+def cleanUp(days):
+    while True:
+        try:
+            exec(open('./test2.py').read())
+            print('bis hier auch')
+
+            time.sleep(30)
+
+        except KeyboardInterrupt:
+            print("Abbruch")
+
+def runRFID():
+    while True:
+        try:
+            exec(open('./test2.py').read())
+
+            time.sleep(2)
+
+        except KeyboardInterrupt:
+            print("Abbruch")
+
+
+
+if __name__ == "__main__":
+    try:
+        t = threading.Thread(target=insertTempHum, args=(instance,))
+        t2 = threading.Thread(target=cleanUp, args=(days,))
+        t3 = threading.Thread(target=runRFID,)
+        t.start()
+        print('test')
+        t2.start()
+        exec(open('./test2.py').read())
+
+
+
+    except KeyboardInterrupt:
+        print("Abbruch")

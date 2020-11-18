@@ -1,0 +1,1 @@
+maxTemperature = 70

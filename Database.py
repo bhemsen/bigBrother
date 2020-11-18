@@ -42,12 +42,13 @@ class Database:
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
                 self.db.rollback()   
-                time.sleep(15)
+            
+            time.sleep(15)
 
     #days needs to be a string   
     def cleanUp(self, days):
-        sql = "DELETE FROM temperature WHERE DATEDIFF(day, NOW()) <= %s"
-        self.days = days
+        sql = "SELECT * FROM temperature WHERE day < NOW()- INTERVAL %s DAY;"
+        self.days = str(days)
 
         while True:
             try:
@@ -58,7 +59,7 @@ class Database:
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
                 self.db.rollback()    
-                time.sleep(2500000)
+            time.sleep(2500000)
 
         
     def getAllowdRFIDS(self):
@@ -123,4 +124,3 @@ class Database:
         self.db.close()
 
         
-

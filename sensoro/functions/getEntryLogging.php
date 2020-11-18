@@ -2,9 +2,9 @@
 
 require '../includes.php';
 
-function getTemperature(){
-    $sql = "SELECT temperature,time 
-        FROM temperature WHERE day = CURRENT_DATE()";
+function getEntrylog(){
+    $sql = "SELECT time, name, rfid, access 
+        FROM entrylog ORDER BY ID DESC";
 
     $con = getDB();
 
@@ -26,4 +26,4 @@ function getTemperature(){
 
 }
 
-echo getTemperature();
+echo getEntrylog();

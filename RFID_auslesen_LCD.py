@@ -54,22 +54,34 @@ def unknown():
     lcd.clear()
     MIFAREReader.MFRC522_StopCrypto1()
 
-
 def compareKeyWithDatabaseKeys(key):
     db = Database("localhost", "webadmin", "password", "sensoro")
     result = db.getAllowdRFIDS()
-    for i in range(len(result)-1):
-        allowedKey = ast.literal_eval(result[i][0])
+
+    for i in range(len(result)):
+        respondKey = ast.literal_eval(result[i][0])
+        allowedKey = respondKey(:9)
         securityLevel = result[i][2]
         name = result[i][1]
+        print(allowedKey)
         if allowedKey == key:
             if securityLevel == 2:
                 entry(name)
+                access = "granted"
+                db.logEntry(name , key, access)
+                return
 
-            elif securityLevel == 1:
+            else:
                 noentry(name)
-            else: 
-                unknown()
+                access = "denied"
+                db.logEntry(name , key, access)
+                return
+
+    unknown()
+    name = "unknown"
+    access = "denied"
+    db.logEntry(name , key, access)
+
 
 # ...
  
@@ -87,6 +99,7 @@ try:
         if status == MIFAREReader.MI_OK:
             # Get the UID of the card
             (status,uid) = MIFAREReader.MFRC522_Anticoll()
+            print(uid)
             # This is the default key for authentication
             key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
             # Select the scanned tag

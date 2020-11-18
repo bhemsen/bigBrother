@@ -19,19 +19,30 @@ db = Database("localhost", "webadmin", "password", "sensoro")
 
 
 #initialize threading
-class FuncThread(threading.Thread):
-    def __init__(self, target, *args):
-        self._target = target
-        self._args = args
-        threading.Thread.__init__(self)
+class FirstThread(threading.Thread):
  
     def run(self):
-        self._target(*self._args)
- 
+        while True:
+            db.insertTemperetureAndHumidity(instance)
+            time.sleep(15)
 
-t1 = FuncThread(db.insertTemperetureAndHumidity, instance)
-t2 = FuncThread(db.cleanUp, "7")
-t3 = FuncThread(db.getAllowdRFIDS)
+class SecondThread(threading.Thread):
+ 
+    def run(self):
+        while True:
+            db.cleanUp("7")
+            time.sleep(2000000)
+
+class ThirdThread(threading.Thread):
+ 
+    def run(self):
+        while True:
+            db.getAllowdRFIDS()
+            time.sleep(2)
+
+t1 = FirstThread()
+t2 = SecondThread()
+t3 = ThirdThread()
 
 t1.start()
 t2.start()
@@ -40,4 +51,6 @@ t3.start()
 t1.join()
 t2.join()
 t3.join()
+
+
 db.close()

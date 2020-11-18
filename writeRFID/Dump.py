@@ -24,16 +24,13 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
-import random
-import Database
-from Database import Database
 
 continue_reading = True
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
     global continue_reading
-    print("Ctrl+C captured, ending read.")
+    print "Ctrl+C captured, ending read."
     continue_reading = False
     GPIO.cleanup()
 
@@ -51,7 +48,7 @@ while continue_reading:
 
     # If a card is found
     if status == MIFAREReader.MI_OK:
-        print("Card detected")
+        print "Card detected"
     
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
@@ -60,7 +57,7 @@ while continue_reading:
     if status == MIFAREReader.MI_OK:
 
         # Print UID
-        print("Card read UID: {},{},{},{}".format(uid[0], uid[1], uid[2], uid[3]))
+        print "Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
     
         # This is the default key for authentication
         key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
@@ -68,48 +65,8 @@ while continue_reading:
         # Select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
 
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-        print("\n")
+        # Dump the data
+        MIFAREReader.MFRC522_DumpClassic1K(key, uid)
 
-        # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-
-            # Variable for the data to write
-            data = []
-
-            # Fill the data with 0xFF
-            for x in range(0,16):
-                data.append(random.randint(0,255))
-
-            print("Sector 8 looked like this:")
-            # Read block 8
-            MIFAREReader.MFRC522_Read(8)
-            print("\n")
-
-            print("Sector 8 will now be filled with 0xFF:")
-            # Write the data
-            MIFAREReader.MFRC522_Write(8, data)
-            
-            ############################  Here the sql Instert ############################
-            db = Database("localhost", "webadmin", "password", "sensoro")
-            db.addNewRFID(data)
-
-
-
-
-
-            print("\n")
-
-            print("It now looks like this:")
-            # Check to see if it was written
-            MIFAREReader.MFRC522_Read(8)
-            print("\n")
-
-            # Stop
-            MIFAREReader.MFRC522_StopCrypto1()
-
-            # Make sure to stop reading for cards
-            continue_reading = False
-        else:
-            print("Authentication error")
+        # Stop
+        MIFAREReader.MFRC522_StopCrypto1()

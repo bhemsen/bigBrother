@@ -31,8 +31,8 @@ class Database:
             print("Temperature: %-3.1f C" % result.temperature)
             print("Humidity: %-3.1f %%" % result.humidity)
             
-            temperature = str(result.temperature)
-            humidity = str(result.humidity)
+            temperature = float(result.temperature)
+            humidity = float(result.humidity)
             
             try:
                 self.cursor.execute(sql, (temperature,humidity,), True)
@@ -66,13 +66,15 @@ class Database:
         sql = "SELECT rfid,name,securityLevel FROM rfid WHERE securityLevel = 1 OR securityLevel = 2"
         try:
             self.cursor.execute(sql)
-            print ("data recieved")
+            
             
             result = self.cursor.fetchall()
 
             for row in result:
                 row = list(row)
                 data.append(row)
+
+            print ("data recieved")
             return data
 
         except mysql.connector.Error as error:
@@ -99,6 +101,21 @@ class Database:
             self.db.rollback() 
 
 
+    def logEntry(self, name , rfid, access):
+        self.name = name
+        self.rfid  = str(rfid)
+        self.access = access
+        sql = "INSERT INTO `entrylog` (`ID`, `time`, `name`, `rfid`, `access`) VALUES (NULL, current_timestamp(), %s, %s, %s)"
+
+        try:
+            self.cursor.execute(sql, (self.name, self.rfid, self.access,))
+            self.db.commit()
+            
+
+        except mysql.connector.Error as error:
+            print("parameterized query failed {}".format(error))
+            self.db.rollback()
+        
 
 
     def close(self):

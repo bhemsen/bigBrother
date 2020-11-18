@@ -2,9 +2,8 @@
 
 require '../includes.php';
 
-function getTemperature(){
-    $sql = "SELECT temperature,time 
-        FROM temperature WHERE day = CURRENT_DATE()";
+function getAverageTemperature(){
+    $sql = "SELECT day,HOUR(time) as HOUR, avg(temperature) as temperature FROM `temperature` GROUP by day , HOUR(time)";
 
     $con = getDB();
 
@@ -26,4 +25,4 @@ function getTemperature(){
 
 }
 
-echo getTemperature();
+echo getAverageTemperature();

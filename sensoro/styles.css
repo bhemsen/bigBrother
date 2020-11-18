@@ -13,10 +13,18 @@ h1 {
 
 section {
     margin-top: 5%;
+
 }
 
 canvas {
     border: 1px solid black;
+    width: 690px;
+    height: 345px;
+    margin-bottom: 3%;
+}
+
+ul {
+    width: 100%;
 }
 
 ul li {
@@ -24,7 +32,28 @@ ul li {
     text-decoration: none;
 }
 
+li span {
+    display: inline-block;
+    min-width: 50px;
+}
 
 .container {
     flex-wrap: wrap;
 }
+
+th {
+    width: 350px;
+}
+
+.btn {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+}
+
+.table-wrapper {
+    height: 300px;
+    overflow: auto;
+}
+

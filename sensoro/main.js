@@ -1,41 +1,112 @@
 let labels = [];
 let temperatures = [];
 let humidity = [];
+let labelsAverage = [];
+let temperaturesAverage = [];
+let humidityAverage = [];
 let currTemp = document.getElementById('temp');
 let currHumidity = document.getElementById('humidity');
 
-let canvas = document.querySelector('canvas');
+let canvas = document.getElementById('chart');
 let ctx = canvas.getContext('2d');
 
+let canvasAverage = document.getElementById('avarage-chart');
+let ctxAverage = canvasAverage.getContext('2d');
+
+
+
+// ______________________________________________________________--Drawing Charts
 let chart = new Chart(canvas, {
     type:'line',
     data:{
         labels:[],
        
-        datasets:[{
+        datasets: [{
             label:'Temperature',
             data: [],
             borderColor: '#ff6666',
             backgroundColor: 'transparent',
-            borderWidth: "1px"
-        },
-        {
+            borderWidth: 2,
+            yAxisID: 'A',
+            data: []
+          }, {
             label:'humidity',
+            yAxisID: 'B',
             data: [],
             borderColor: '#6666ff',
             backgroundColor: 'transparent',
-            borderWidth: "1px"
-
-        }]
+            borderWidth: 2
+          }]
     },
-    options:{
+    options: {
+        scales: {
+            yAxes: [{
+                id: 'A',
+                type: 'linear',
+                position: 'left',
+            }, {
+                id: 'B',
+                type: 'linear',
+                position: 'right',
+                ticks: {
+                    max: 100,
+                    min: 0
+                }
+            }]
+        },
         title:{
             display:true,
-            text:'Seit Aufzeichnung'
+            text:'Heute'
         }
     }
 })
 
+
+let chartAverage = new Chart(canvasAverage, {
+    type:'line',
+    data:{
+        labels:[],
+        datasets: [{
+            label:'Temperature',
+            data: [],
+            borderColor: '#ff6666',
+            backgroundColor: 'transparent',
+            borderWidth: 2,
+            yAxisID: 'A',
+            data: []
+          }, {
+            label:'humidity',
+            yAxisID: 'B',
+            data: [],
+            borderColor: '#6666ff',
+            backgroundColor: 'transparent',
+            borderWidth: 2
+          }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                id: 'A',
+                type: 'linear',
+                position: 'left',
+            }, {
+                id: 'B',
+                type: 'linear',
+                position: 'right',
+                ticks: {
+                    max: 100,
+                    min: 0
+                }
+            }]
+        },
+        title:{
+            display:true,
+            text:'Durchschnitt 7 Tage'
+        }
+    }
+})
+
+// ______________________________________________________________--Create Update-Functions
 
 function addDataTemp(chart, label, data) {
     chart.data.labels.push(label);
@@ -49,6 +120,7 @@ function addDataHum(chart, data) {
     chart.update();
 }
 
+// ______________________________________________________________--Create Temperature-Functions
 
 function getTemperatureInitial() {
 
@@ -60,7 +132,7 @@ function getTemperatureInitial() {
             
                 
         for (let tupel in result) {
-            labels.push(result[tupel].time);
+            labels.push(result[tupel].HOUR);
             temperatures.push(parseFloat(result[tupel].temperature));
             addDataTemp(chart, labels[tupel], temperatures[tupel]); 
         }
@@ -72,6 +144,31 @@ function getTemperatureInitial() {
     };
     xhr.send();
 }
+
+
+function getTemperatureAverage() {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://localhost/functions/getAverageTemp.php', true)
+    xhr.onload = function () {
+        if(xhr.status === 200){
+            let result = JSON.parse(this.response);
+            
+                
+        for (let tupel in result) {
+            labelsAverage.push(result[tupel].HOUR);
+            temperaturesAverage.push(parseFloat(result[tupel].temperature));
+            addDataTemp(chartAverage, labelsAverage[tupel], temperaturesAverage[tupel]); 
+        }
+        
+        } else {
+            console.log(xhr.status);
+            return;
+        }
+    };
+    xhr.send();
+}
+
 
 
 function getTemperatureUpdate(){
@@ -85,7 +182,7 @@ function getTemperatureUpdate(){
             
                 
         for (let tupel in result) {
-            labels.push(result[tupel].time);
+            labels.push(result[tupel].HOUR);
             temperatures.push(parseFloat(result[tupel].temperature));
             addDataTemp(chart, labels[tupel], temperatures[tupel]); 
             currTemp.innerText = temperatures[tupel];
@@ -99,6 +196,8 @@ function getTemperatureUpdate(){
     xhr.send();
 
 }
+
+// ______________________________________________________________--Create Humidity-Functions
 
 function getHumidityInitial() {
 
@@ -121,6 +220,29 @@ function getHumidityInitial() {
     };
     xhr.send();
 }
+
+function getHumidityAverage() {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://localhost/functions/getAverageHum.php', true)
+    xhr.onload = function () {
+        if(xhr.status === 200){
+            let result = JSON.parse(this.response);
+            
+            for (let tupel in result) {
+                humidityAverage.push(parseFloat(result[tupel].humidity));
+                console.log(humidityAverage);
+                addDataHum(chartAverage, humidityAverage[tupel]); 
+        }
+        
+        } else {
+            console.log(xhr.status);
+            return;
+        }
+    };
+    xhr.send();
+}
+
 
 
 function getHumidityUpdate(){
@@ -147,18 +269,86 @@ function getHumidityUpdate(){
 
 }
 
+
+// ______________________________________________________________--Display Entrylogging
+
+function createTableEntry(result) {
+
+    for (let tupel in result) {
+        let tbodyRef = document.getElementById('tbody')
+        let array = [];
+        array.push(result[tupel].time, result[tupel].name,result[tupel].rfid, result[tupel].access);
+        // Insert a row at the end of table
+        let newRow = tbodyRef.insertRow();
+
+        for (let i = 0; i < array.length; i++){
+             // Insert a cell at the end of the row
+            let newCell = newRow.insertCell();
+            newCell.innerText = array[i];
+            
+        }   
+    }
+
+}
+
+function refreshTable(){
+    let tbody = document.getElementById('tbody');
+    tbody.innerHTML = "";
+}
+
+function getEntrylog() {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://localhost/functions/getEntryLogging.php', true)
+    xhr.onload = function () {
+        if(xhr.status === 200){
+            let result = JSON.parse(this.response);
+            
+            createTableEntry(result);
+        
+        } else {
+            console.log(xhr.status);
+            return;
+        }
+    };
+    xhr.send();
+}
+
+
 function updateArrays(){
     
     setInterval(function(){ 
         getTemperatureUpdate();
         getHumidityUpdate();
-        
     }, 15000);
 
 }
 
 
+// ______________________________________________________________-- Call functions in main()
 
-getTemperatureInitial();
-getHumidityInitial();
-updateArrays();
+function main(){
+    
+    getTemperatureInitial();
+    getHumidityInitial();
+    getHumidityAverage();
+    getTemperatureAverage();
+    getEntrylog()
+    updateArrays();
+}
+
+
+window.onload = function(){
+    let refreshTableBtn = document.getElementById('refresh');
+    refreshTableBtn.addEventListener('click', ()=>{
+        refreshTable();
+        getEntrylog();
+    });
+
+    let iFrame = document.getElementById('iframe');
+    iFrame.setAttribute("src", iFrame.dataset.src) 
+
+    main();
+}
+
+

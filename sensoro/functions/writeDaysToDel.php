@@ -6,5 +6,5 @@ $insert = "days = $days";
 
 file_put_contents($file, $insert);
 
-header("Location: http://localhost/sensoro/index.php");
+header("Location: http://localhost/index.php");
 exit();

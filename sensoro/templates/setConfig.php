@@ -1,7 +1,7 @@
 <?php require 'header.php';?>
 
 <section>
-<form action="http://localhost/sensoro/functions/writeCritTemp.php" method="POST">
+<form action="http://localhost/functions/writeCritTemp.php" method="POST">
         <div class="form-group">
             <label for="inputMaxTemp">Kritische Temperatur: </label>
             <input id="inputMaxTemp" class="form-control" type="number" name="inputMaxTemp">
@@ -12,7 +12,7 @@
         </div>
     </form>
 
-    <form action="http://localhost/sensoro/functions/writeDaysToDel.php" method="POST">
+    <form action="http://localhost/functions/writeDaysToDel.php" method="POST">
         <div class="form-group">
             <label for="daysToDelete">Speicher Grenze: </label>
             <input id="daysToDelete" class="form-control" type="text" name="daysToDelete">

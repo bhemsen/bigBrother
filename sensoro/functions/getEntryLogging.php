@@ -4,7 +4,7 @@ require '../includes.php';
 
 function getEntrylog(){
     $sql = "SELECT time, name, rfid, access 
-        FROM entrylog ORDER BY ID DESC";
+        FROM entrylog ORDER BY ID DESC LIMIT 10";
 
     $con = getDB();
 

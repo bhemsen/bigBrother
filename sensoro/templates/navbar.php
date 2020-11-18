@@ -9,6 +9,9 @@
         <a class="nav-link" href="http://localhost/index.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="http://localhost/templates/temperature.php">Temperatur</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="http://localhost/templates/setConfig.php">Config</a>
       </li>
     </ul>

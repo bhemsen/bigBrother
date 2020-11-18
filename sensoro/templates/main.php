@@ -17,18 +17,3 @@
             <button id="refresh" class="btn btn-primary">Aktualisieren</button>
         </div>
     </section>
-
-    <section>
-        <ul>
-            <li>aktuelle Temperatur: <span id="temp"></span></li>
-            <li>aktuelle Luftfeutchtigkeit: <span id="humidity"></span></li>
-        </ul>
-
-    </section> 
-
-
-    <section>
-            <canvas id="chart"></canvas>
-            <canvas id="avarage-chart"></canvas>
-    </section>
-  

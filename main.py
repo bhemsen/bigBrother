@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 import dht11
 import Database
 from Database import Database
+import RFID_auslesen_LCD
 
 # initialize GPIOS
 GPIO.setwarnings(False)
@@ -61,20 +62,20 @@ class myClassC(Thread):
     def stop(self):
         self.running = False
 
+if __name__ == "__main__":
+    
+    try:
+        myClassA()
+        myClassB()
+        myClassC()
+        while True:
+            pass
 
-try:
 
-    myClassA()
-    myClassB()
-    myClassC()
-    while True:
-        pass
-
-
-except KeyboardInterrupt:
-    print("Abbruch")
-    myClassA().stop()
-    myClassB().stop()
-    myClassC().stop()
-    db.close()
+    except KeyboardInterrupt:
+        print("Abbruch")
+        myClassA().stop()
+        myClassB().stop()
+        myClassC().stop()
+        db.close()
 

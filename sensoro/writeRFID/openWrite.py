@@ -12,4 +12,4 @@ cgitb.enable()
 print("Content-Type: text/plain;charset=utf-8")
 print()
 
-exec(open(Write.py).read())
+exec(open("Write.py").read())

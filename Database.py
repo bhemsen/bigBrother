@@ -47,12 +47,12 @@ class Database:
 
     #days needs to be a string   
     def cleanUp(self, days):
-        sql = "SELECT * FROM temperature WHERE day < NOW()- INTERVAL %s DAY;"
+        sql = "DELETE FROM temperature WHERE day < NOW()- INTERVAL %s DAY;"
         self.days = str(days)
 
         while True:
             try:
-                self.cursor.execute(sql, days, True)
+                self.cursor.execute(sql, days)
                 self.db.commit()
                 print ("Data deleted")
                     

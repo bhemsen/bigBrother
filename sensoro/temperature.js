@@ -231,7 +231,6 @@ function getHumidityAverage() {
             
             for (let tupel in result) {
                 humidityAverage.push(parseFloat(result[tupel].humidity));
-                console.log(humidityAverage);
                 addDataHum(chartAverage, humidityAverage[tupel]); 
         }
         

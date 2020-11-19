@@ -42,5 +42,8 @@ Die main.py und das Auslesen der Chips können gleichzeitig laufen.
 
 Gestartet wird mit python3 RFID_auslesen_LCD.py (im Projektordner /home/pi/bigBrother)
 
-Das Beschreiben/Überschreiben der RFID-Chips
+Das Beschreiben/Überschreiben der RFID-Chips ist ebenfalls separiert, da es nicht mit gleichzeitig mit dem Auslesescript laufen darf. Außerdem ist es kein Automatisierter Prozess und muss manuell angestoßen werden, wenn es benötigt wird. Es scannt Chips, die an den Sensor gehalten werden ließt deren Authentication-Code aus und schreibt an die Position[8] ein Array mit 16 zufälligen Zahlen, Fragt den Beutzer nach input für den Namen und das SecurityLevel uns speichert die Einträge in der Datenbank (rfid)
+Dieses script ist ausgelagert, da es eine andere Konfiguration des Pin-Boards benötigt.
+
+Gestartet wird mit python3 sensoro/writeRFID/Write.py (im Projektordner /home/pi/bigBrother)
 

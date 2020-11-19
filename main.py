@@ -8,6 +8,8 @@ import RPi.GPIO as GPIO
 import dht11
 import Database
 from Database import Database
+from sensoro.functions.days import days
+from sensoro.functions.temp import maxTemperature
 
 
 
@@ -22,7 +24,8 @@ instance = dht11.DHT11(pin = 4)
 
 #initialize database connection
 db = Database("localhost", "webadmin", "password", "sensoro")
-days = "7"
+
+
 
 
 
@@ -50,7 +53,7 @@ class myClassB(Thread):
         self.start()
     def run(self):
         while self.running:
-            db.cleanUp(days)
+            db.cleanUp(str(days))
 
     def stop(self):
         self.running = False

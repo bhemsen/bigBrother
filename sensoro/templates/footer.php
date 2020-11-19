@@ -1,5 +1,10 @@
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script type="application/javascript" src="main.js"></script>
+<footer>
+    <p>
+        Bendix Hemsen, Daniell Madscher,
+        Jonas Schwab, Jorge Hansen,
+        Tim-Alexander Smentek
+    </p>
+</footer>
 </body>
 </html>

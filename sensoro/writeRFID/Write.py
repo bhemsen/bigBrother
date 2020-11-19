@@ -23,12 +23,14 @@
 
 import sys
 # insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, '/home/pi/bigBrother/writeRFID')
+sys.path.insert(1, '/home/pi/bigBrother/sensoro/writeRFID')
+
 
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
 import random
+sys.path.insert(1, '/home/pi/bigBrother/')
 import Database
 from Database import Database
 
@@ -48,6 +50,8 @@ signal.signal(signal.SIGINT, end_read)
 MIFAREReader = MFRC522.MFRC522()
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
+print(continue_reading)
+
 while continue_reading:
     
     # Scan for cards    

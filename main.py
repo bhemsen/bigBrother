@@ -8,6 +8,8 @@ import RPi.GPIO as GPIO
 import dht11
 import Database
 from Database import Database
+from functions.days import day
+from functions.temp import temp
 
 
 
@@ -22,7 +24,8 @@ instance = dht11.DHT11(pin = 4)
 
 #initialize database connection
 db = Database("localhost", "webadmin", "password", "sensoro")
-days = "7"
+
+print(day)
 
 
 

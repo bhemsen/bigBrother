@@ -14,9 +14,11 @@
       <li class="nav-item">
         <a class="nav-link" href="http://localhost/templates/setConfig.php">Config</a>
       </li>
+      <!--
       <li class="nav-item">
         <a class="nav-link" href="http://localhost/templates/writeRFID.php">RFID</a>
       </li>
+-->
     </ul>
   </div>
 </nav>

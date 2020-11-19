@@ -13,7 +13,18 @@ Verwendete Frameworks zur besseren Darstellung:
  - Bootstrap 4.5.3
  - Chart.js 2.8.0
 
-Erreichbar ist die Website unter http://localhost/ 
+Erreichbar ist die Website unter http://localhost/ auf dem Pi selbst - die Erreichbarkeit lässt sich in der apache2.conf anpassen. 
+Dargestellt wird: 
+ - Livestream der verbauten Kamera (realisiert über ein <iframe> dessen Source nachgeladen wird, nachdem die Seite vollständig geladen ist)
+ - Log der letzten 20 RFID Auslesungen inklusive Status und Refresh-Button um neue Einträge nachzuladen ohne einen Pagereload zu machen
+ - Aktuelle Temperatur und Luftfeuchtigkeit
+ - Diagramme zur Überwachung der Temperatur und Luftfeuchtigkeit im Kontext des aktuellen Tages und Durchschnittstemperatur/-luftfeuchtigkeit der letzten 7 Tage
+ - Formular zum Ändern der Temperaturobergrenze und Tagesgrenze nach der gelöscht wird
+ 
+
+*Datenbank*
+
+In Verbindung mit dem Apache Webserver wird eine MySql/MariaDB Datenbank benutzt. Das Instalationsscribt befindet sich im Repository(SQLSCRIPT.sql). Dort wird zunächst ein host-neutraler Nutzer(webadmin@%) angelegt, ihm alle Rechte gewährt, die Datenbank sensoro erstellt, die benötigten Tabellen angelegt und die Spalten konfiguriert. Mir diesem Nutzer werden Einträge erstellt, ausgelesen und bearbeitet. 
 
 
 *Python-Scripte:*
@@ -22,4 +33,6 @@ Die main.py startet eine Verbindung mit einer Datenbank - realisiert durch Aufru
   - Thread1 ruft in einer Infinite Loop die Funktion der Klasse Database.py insertTemperatureAndHumidity auf, die als Übergabeparameter eine Instanz des DHT11 chips benötigt. Diese Methoden der Instanz auf, die sowohl die Temperatur, als auch Luftfeuchtigkeit auslesen und speichert die ausgelesenen Daten in der Datenbank temperature - realisiert durch ein Prepared-Statement (INSERT)- und wartet 15 sec. Beendet wird der Thread durch STRG + C
 
   - Thread2 ruft in einer Infinite Loop die Funktion der Klasse Database.py cleanUp auf, die als Übergabeparameter die Anzahl Tage benötigt, nach der die Daten aus der Datenbank gelöscht werden sollen. Dies wird realisiert mit einem Prepared-Statement (Delete), das die alle Einträge löscht, die Älter sind als die übermittelte Anzahl
+  
+  
 

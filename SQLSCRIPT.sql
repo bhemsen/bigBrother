@@ -25,7 +25,7 @@ CREATE TABLE `sensoro`.`rfid` (
   `ID` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(32) NOT NULL , 
   `securityLevel` INT NOT NULL , 
-  `rfid` JSON NOT NULL , 
+  `rfid` VARCHAR(255) NOT NULL , 
   PRIMARY KEY (`ID`)) ENGINE = InnoDB;
 
 ALTER TABLE `rfid` ADD FOREIGN KEY (`securityLevel`) 

@@ -182,7 +182,7 @@ function getTemperatureUpdate(){
             
                 
         for (let tupel in result) {
-            labels.push(result[tupel].HOUR);
+            labels.push(result[tupel].time);
             temperatures.push(parseFloat(result[tupel].temperature));
             addDataTemp(chart, labels[tupel], temperatures[tupel]); 
             currTemp.innerText = temperatures[tupel];

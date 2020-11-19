@@ -133,6 +133,7 @@ function getTemperatureInitial() {
                 
         for (let tupel in result) {
             labels.push(result[tupel].HOUR);
+            console.log(labels)
             temperatures.push(parseFloat(result[tupel].temperature));
             addDataTemp(chart, labels[tupel], temperatures[tupel]); 
         }

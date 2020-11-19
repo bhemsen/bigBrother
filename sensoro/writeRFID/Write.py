@@ -25,10 +25,12 @@ import sys
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, '/home/pi/bigBrother/sensoro/writeRFID')
 
+
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
 import random
+sys.path.insert(1, '/home/pi/bigBrother/')
 import Database
 from Database import Database
 

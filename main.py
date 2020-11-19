@@ -53,7 +53,7 @@ class myClassB(Thread):
         self.start()
     def run(self):
         while self.running:
-            db.cleanUp(days)
+            db.cleanUp(str(days))
 
     def stop(self):
         self.running = False

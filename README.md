@@ -27,12 +27,20 @@ Dargestellt wird:
 In Verbindung mit dem Apache Webserver wird eine MySql/MariaDB Datenbank benutzt. Das Instalationsscribt befindet sich im Repository(SQLSCRIPT.sql). Dort wird zunächst ein host-neutraler Nutzer(webadmin@%) angelegt, ihm alle Rechte gewährt, die Datenbank sensoro erstellt, die benötigten Tabellen angelegt und die Spalten konfiguriert. Mir diesem Nutzer werden Einträge erstellt, ausgelesen und bearbeitet. 
 
 
-*Python-Scripte:*
+*Python-Scripte*
+
 Die main.py startet eine Verbindung mit einer Datenbank - realisiert durch Aufruf der Klasse Database.py. Außerdem werden 2 Threads als Daemon gestartet. 
 
-  - Thread1 ruft in einer Infinite Loop die Funktion der Klasse Database.py insertTemperatureAndHumidity auf, die als Übergabeparameter eine Instanz des DHT11 chips benötigt. Diese Methoden der Instanz auf, die sowohl die Temperatur, als auch Luftfeuchtigkeit auslesen und speichert die ausgelesenen Daten in der Datenbank temperature - realisiert durch ein Prepared-Statement (INSERT)- und wartet 15 sec. Beendet wird der Thread durch STRG + C
+  - Thread1 ruft in einer Infinite-Loop die Funktion der Klasse Database.py insertTemperatureAndHumidity auf, die als Übergabeparameter eine Instanz des DHT11 chips benötigt. Diese Methoden der Instanz auf, die sowohl die Temperatur, als auch Luftfeuchtigkeit auslesen und speichert die ausgelesenen Daten in der Datenbank temperature - realisiert durch ein Prepared-Statement (INSERT)- und wartet 15 sec. Beendet wird der Thread durch STRG + C
 
-  - Thread2 ruft in einer Infinite Loop die Funktion der Klasse Database.py cleanUp auf, die als Übergabeparameter die Anzahl Tage benötigt, nach der die Daten aus der Datenbank gelöscht werden sollen. Dies wird realisiert mit einem Prepared-Statement (Delete), das die alle Einträge löscht, die Älter sind als die übermittelte Anzahl
+  - Thread2 ruft in einer Infinite-Loop die Funktion der Klasse Database.py cleanUp auf, die als Übergabeparameter die Anzahl Tage benötigt, nach der die Daten aus der Datenbank gelöscht werden sollen. Dies wird realisiert mit einem Prepared-Statement (Delete), das die alle Einträge löscht, die Älter sind als die übermittelte Anzahl(Standart 7) und wartet einen halben Tag. Beendet wird der Thread durch STRG + C
   
-  
+Gestartet wird mit python3 main.py (im Projektordner /home/pi/bigBrother)
+
+Das Auslesen der RFID-Chips ist serpariert, um unabhängig vom main.py Script zu sein. In einer Infinite-Loop sucht der Scanner nach Chips und ließt rangehaltene alle 2sec aus. Die ausgelesenen Daten werden mit den Daten der Datenbak verglichen und je nach Fall (bekannt erlaubt, bekannt nicht erlaubt, unbekannt) werden uterschiedliche Mekdungen auf dem LCD Display ausgegeben. Das Ergebnis wird mittels Prpared-Statement an die Datenbank übermittelt und in der entrylog tabelle gespeichert.
+Die main.py und das Auslesen der Chips können gleichzeitig laufen.
+
+Gestartet wird mit python3 RFID_auslesen_LCD.py (im Projektordner /home/pi/bigBrother)
+
+Das Beschreiben/Überschreiben der RFID-Chips
 
